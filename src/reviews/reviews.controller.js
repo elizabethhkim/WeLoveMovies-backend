@@ -1,6 +1,7 @@
 const service = require("./reviews.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
+// checks if review with :reviewId exists
 async function reviewExists(req, res, next) {
     const foundReview = await service.read(req.params.reviewId)
     if (foundReview) {
@@ -14,11 +15,13 @@ async function reviewExists(req, res, next) {
     }
 }
 
+// delete review
 async function destroy(req, res) {
     await service.delete(res.locals.review.review_id)
     res.sendStatus(204)
 }
 
+// update review
 async function update(req, res) {
     const updatedReview = {
         ...req.body.data,
